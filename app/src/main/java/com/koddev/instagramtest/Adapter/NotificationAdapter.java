@@ -110,7 +110,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
                 .child("Users").child(publisherid);
 
-        reference.addValueEventListener(new ValueEventListener() {
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
@@ -129,7 +129,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
                 .child("Posts").child(postid);
 
-        reference.addValueEventListener(new ValueEventListener() {
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Post post = dataSnapshot.getValue(Post.class);

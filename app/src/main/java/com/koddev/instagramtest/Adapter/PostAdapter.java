@@ -202,13 +202,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
                                 editPost(post.getPostid());
                                 return true;
                             case R.id.delete:
+                                final String id = post.getPostid();
                                 FirebaseDatabase.getInstance().getReference("Posts")
                                         .child(post.getPostid()).removeValue()
                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if (task.isSuccessful()){
-                                                    Toast.makeText(mContext, "Deleted!", Toast.LENGTH_SHORT).show();
+                                                    deleteNotifications(id, firebaseUser.getUid());
                                                 }
                                             }
                                         });
@@ -268,6 +269,31 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
         hashMap.put("ispost", true);
 
         reference.push().setValue(hashMap);
+    }
+
+    private void deleteNotifications(final String postid, String userid){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Notifications").child(userid);
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    if (snapshot.child("postid").getValue().equals(postid)){
+                        snapshot.getRef().removeValue()
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        Toast.makeText(mContext, "Deleted!", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void nrLikes(final TextView likes, String postId){
