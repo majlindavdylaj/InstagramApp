@@ -69,6 +69,7 @@ public class FollowersActivity extends AppCompatActivity {
                 break;
             case "followers":
                 getFollowers();
+                break;
             case "views":
                 getViews();
                 break;
@@ -79,7 +80,7 @@ public class FollowersActivity extends AppCompatActivity {
     private void getViews(){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Story")
                 .child(id).child(getIntent().getStringExtra("storyid")).child("views");
-        reference.addValueEventListener(new ValueEventListener() {
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 idList.clear();
