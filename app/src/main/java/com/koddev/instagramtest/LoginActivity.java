@@ -24,11 +24,12 @@ import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText email, password;
-    Button login;
-    TextView txt_signup;
+    private EditText email, password;
+    private Button login;
+    private TextView txt_signup;
+    private String str_email, str_password;
 
-    FirebaseAuth auth;
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +57,8 @@ public class LoginActivity extends AppCompatActivity {
                 pd.setMessage("Please wait...");
                 pd.show();
 
-                String str_email = email.getText().toString();
-                String str_password = password.getText().toString();
+                str_email = email.getText().toString();
+                str_password = password.getText().toString();
 
                 if (TextUtils.isEmpty(str_email) || TextUtils.isEmpty(str_password)){
                     Toast.makeText(LoginActivity.this, "All fields are required!", Toast.LENGTH_SHORT).show();
