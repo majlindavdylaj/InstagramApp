@@ -36,7 +36,7 @@ public class OptionsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(OptionsActivity.this, StartActivity.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
             }
         });
     }
