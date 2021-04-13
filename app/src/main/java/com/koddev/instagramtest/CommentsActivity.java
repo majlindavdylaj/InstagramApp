@@ -35,7 +35,7 @@ public class CommentsActivity extends AppCompatActivity {
     private List<Comment> commentList;
 
     EditText addcomment;
-    ImageView image_profile;
+    ImageView image_profile,back;
     TextView post;
 
     String postid;
@@ -48,16 +48,7 @@ public class CommentsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comments);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Comments");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        
 
         Intent intent = getIntent();
         postid = intent.getStringExtra("postid");
@@ -74,6 +65,7 @@ public class CommentsActivity extends AppCompatActivity {
         post = findViewById(R.id.post);
         addcomment = findViewById(R.id.add_comment);
         image_profile = findViewById(R.id.image_profile);
+        back = findViewById(R.id.back);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -85,6 +77,13 @@ public class CommentsActivity extends AppCompatActivity {
                 } else {
                     addComment();
                 }
+            }
+        });
+        
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 
